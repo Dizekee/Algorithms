@@ -1,23 +1,40 @@
 #include <stdio.h>
 #include "array.h"
-#include "tasks.h"
+#include "asistant.h"
 
-Array *array_create_and_read(FILE *input)
+void task1(Array *arr)
 {
-    int n;
-    if (fscanf(input, "%d", &n) != 1)
-        return NULL;
+    if (!arr) return;
 
-    Array *arr = array_create((size_t)n);
-    for (int i = 0; i < n; ++i)
-    {
-        int x;
-        if (fscanf(input, "%d", &x) != 1)
-            break;
-        array_set(arr, i, x);
+    size_t arr_size = array_size(arr);
+
+    Array *array_of_even_numbers = NULL;
+    size_t new_array_size = 0;
+    for (size_t i = 0; i < arr_size; i++) {
+        if (array_get(arr, i) % 2 == 0) {
+            new_array_size++;
+        }
+    /* Читаем второй массив */
     }
-    return arr;
+
+    array_of_even_numbers = array_create(new_array_size);
+    size_t index = 0;
+
+    for (size_t i = 0; i < arr_size; i++) {
+        if (array_get(arr, i) % 2 == 0) {
+            array_set(array_of_even_numbers, index++, Data(i));
+        }
+    }
+
+    for (size_t i = 0; i < new_array_size; i++) {
+        if (i) printf(" ");
+        printf("%d", array_get(array_of_even_numbers, i));
+    }
+    printf("\n");
+
+    array_delete(array_of_even_numbers);
 }
+
 
 int main(int argc, char **argv)
 {

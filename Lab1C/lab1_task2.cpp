@@ -1,22 +1,43 @@
 #include <stdio.h>
 #include "array.h"
-#include "tasks.h"
+#include "asistant.h"
 
-Array *array_create_and_read(FILE *input)
+void task2(Array *arr, int shift)
 {
-    int n;
-    if (fscanf(input, "%d", &n) != 1)
-        return NULL;
+    if (!arr) return;
 
-    Array *arr = array_create((size_t)n);
-    for (int i = 0; i < n; ++i)
-    {
-        int x;
-        if (fscanf(input, "%d", &x) != 1)
-            break;
-        array_set(arr, i, x);
+    size_t arr_size = array_size(arr);
+    if (arr_size == 0) { printf("\n"); return; }
+
+    if (shift > 0) {
+        size_t k = (size_t)shift;
+        if (k >= arr_size) {
+            for (size_t i = 0; i < arr_size; ++i)
+                array_set(arr, i, 0);
+        } else {
+            for (size_t i = arr_size; i-- > k; )
+                array_set(arr, i, array_get(arr, i - k));
+            for (size_t i = 0; i < k; ++i)
+                array_set(arr, i, 0);
+        }
+    } else if (shift < 0) {
+        size_t k = (size_t)(-shift);
+        if (k >= arr_size) {
+            for (size_t i = 0; i < arr_size; ++i)
+                array_set(arr, i, 0);
+        } else {
+            for (size_t i = 0; i + k < arr_size; ++i)
+                array_set(arr, i, array_get(arr, i + k));
+            for (size_t i = arr_size - k; i < arr_size; ++i)
+                array_set(arr, i, 0);
+        }
     }
-    return arr;
+
+    for (size_t i = 0; i < arr_size; i++) {
+        if (i) printf(" ");
+        printf("%d", array_get(arr, i));
+    }
+    printf("\n");
 }
 
 int main(int argc, char **argv)
@@ -26,20 +47,13 @@ int main(int argc, char **argv)
     FILE *input = fopen(argv[1], "r");
     if (!input) return 1;
 
-    /* Пропускаем первую задачу: читаем первый массив */
-    Array *arr = array_create_and_read(input);
-    if (!arr) { fclose(input); return 1; }
-    array_delete(arr);
-
-    /* Читаем сдвиг */
     int shift;
     if (fscanf(input, "%d", &shift) != 1) {
         fclose(input);
         return 1;
     }
 
-    /* Читаем второй массив */
-    arr = array_create_and_read(input);
+    Array *arr = array_create_and_read(input);
     if (!arr) { fclose(input); return 1; }
 
     task2(arr, shift);
