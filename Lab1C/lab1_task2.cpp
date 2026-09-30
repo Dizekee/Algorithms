@@ -11,25 +11,18 @@ void task2(Array *arr, int shift)
 
     if (shift > 0) {
         size_t k = (size_t)shift;
-        if (k >= arr_size) {
-            for (size_t i = 0; i < arr_size; ++i)
-                array_set(arr, i, 0);
-        } else {
-            for (size_t i = arr_size; i-- > k; )
-                array_set(arr, i, array_get(arr, i - k));
-            for (size_t i = 0; i < k; ++i)
-                array_set(arr, i, 0);
-        }
+        if (k > arr_size) k = arr_size;
+        for (size_t i = arr_size; i-- > k; )
+            array_set(arr, i, array_get(arr, i - k));
+        for (size_t i = 0; i < k; ++i)
+            array_set(arr, i, 0);
     } else if (shift < 0) {
         size_t k = (size_t)(-shift);
-        if (k >= arr_size) {
-            for (size_t i = 0; i < arr_size; ++i)
-                array_set(arr, i, 0);
-        } else {
-            for (size_t i = 0; i + k < arr_size; ++i)
-                array_set(arr, i, array_get(arr, i + k));
-            for (size_t i = arr_size - k; i < arr_size; ++i)
-                array_set(arr, i, 0);
+        if (k > arr_size) k = arr_size;
+        for (size_t i = 0; i + k < arr_size; ++i)
+            array_set(arr, i, array_get(arr, i + k));
+        for (size_t i = arr_size - k; i < arr_size; ++i)
+            array_set(arr, i, 0);
         }
     }
 
