@@ -23,7 +23,6 @@ void task2(Array *arr, int shift)
             array_set(arr, i, array_get(arr, i + k));
         for (size_t i = arr_size - k; i < arr_size; ++i)
             array_set(arr, i, 0);
-        }
     }
 
     for (size_t i = 0; i < arr_size; i++) {

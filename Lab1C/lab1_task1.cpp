@@ -14,7 +14,6 @@ void task1(Array *arr)
         if (array_get(arr, i) % 2 == 0) {
             new_array_size++;
         }
-    /* Читаем второй массив */
     }
 
     array_of_even_numbers = array_create(new_array_size);
