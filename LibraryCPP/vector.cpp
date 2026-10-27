@@ -2,7 +2,7 @@
 
 struct Vector
 {
-    Data* data;
+    Data *data;
     size_t size;
     size_t capacity;
 };
