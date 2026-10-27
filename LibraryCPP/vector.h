@@ -2,6 +2,8 @@
 #define VECTOR_H
 
 #include <cstddef>
+#include <stdexcept>
+#include <algorithm>
 
 // Vector (dynamic array)
 
@@ -15,7 +17,7 @@ struct Vector;
 Vector *vector_create();
 
 // Deletes vector structure and internal data
-void vector_delete(Vector *vector);
+void vector_delete(Vector **vector);
 
 // Retrieves vector element with the specified index
 Data vector_get(const Vector *vector, size_t index);
